@@ -12,6 +12,7 @@ import frame6 from "../../images/frame7.png";
 import frame7 from "../../images/frame8.png";
 import frame8 from "../../images/frame9.gif";
 import frame9 from "../../images/frame-10-11-12.gif";
+import Alerts from "../alert/Alert"
 
 class HangMan extends Component {
   static defaultProps = {
@@ -81,34 +82,31 @@ class HangMan extends Component {
         this.state.guessed.has(letter) ? (
           letter
         ) : (
-          <button className="btn btn-dark">{"_"}</button>
+          // <button className="btn btn-dark">{"_"}</button> 
+          " _"
         )
       );
   } // buton olunca okumama sorunu
   handleSubmit(event) {
     if (this.state.value === this.state.answer) {
-      alertify.warning('YOU WON!');
+      alert("You WON :"+this.state.answer)
       this.resetButton();
-      
     } else {
-      alertify.warning("You lost");
+      alert("WRONG GUESS")
       this.state.mistake = this.state.mistake + 1;
-      
     }
     event.preventDefault();
-    
   }
 
   render() {
     const gameOver = this.state.mistake >= this.props.maxWrong;
     const isWinner = this.guessedWord().join("") === this.state.answer;
-  
+
     let gameStat = this.generateButtons();
 
     if (isWinner) {
       gameStat = "You Won!!!";
     }
-    
 
     if (gameOver) {
       gameStat = "You Lost!!!";
@@ -122,21 +120,21 @@ class HangMan extends Component {
           Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}
         </div>
         <div className="text-center">
-          <img  src={this.props.images[this.state.mistake]} width="290" alt="" />
+          <img src={this.props.images[this.state.mistake]} width="290" alt="" />
         </div>
         <div className="text-center">
           <h4>Guess the Marvel Characters:</h4>
           <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
           <form onSubmit={this.handleSubmit}>
             <input
-            className="form-control"
-            placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
+              className="form-control"
+              placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
               type="text"
               value={this.state.value}
               onChange={this.handleChange}
             />
-           
-            <input className= "btn btn-dark" type="submit" value="Guess" />
+
+            <input className="btn btn-dark" type="submit" value="Guess" />
           </form>
           <p>{gameStat}</p>
           <button className="btn btn-danger" onClick={this.resetButton}>

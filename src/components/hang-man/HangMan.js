@@ -11,6 +11,7 @@ import frame6 from "../../images/frame7.png";
 import frame7 from "../../images/frame8.png";
 import frame8 from "../../images/frame9.gif";
 import frame9 from "../../images/frame-10-11-12.gif";
+import frame10 from "../../images/frame10.png"
 
 
 class HangMan extends Component {
@@ -27,6 +28,7 @@ class HangMan extends Component {
       frame7,
       frame8,
       frame9,
+      frame10,
     ],
   };
   constructor(props) {
@@ -44,7 +46,7 @@ class HangMan extends Component {
   generateButtons() {
     return "abcdefghijklmnopqrstuvwxyz".split("").map((letter) => (
       <button
-        class="btn btn-lg btn-danger m-2"
+         class="btn btn-lg btn-danger m-2"
         key={letter}
         value={letter}
         onClick={this.handleGuess}
@@ -90,6 +92,7 @@ class HangMan extends Component {
     if (this.state.value === this.state.answer) {
       alert("You WON :"+this.state.answer)
       this.resetButton();
+      
     } else {
       alert("WRONG GUESS")
       this.state.mistake = this.state.mistake + 1;
@@ -118,13 +121,7 @@ class HangMan extends Component {
         <div className="float-right">
           Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}
         </div>
-        <div className="text-center">
-          <img src={this.props.images[this.state.mistake]} width="290" alt="" />
-        </div>
-        <div className="text-center">
-          <h4>Guess the Marvel Characters:</h4>
-          <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
-          <form onSubmit={this.handleSubmit}>
+        <form id="form"onSubmit={this.handleSubmit}>
             <input
               className="form-control"
               placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
@@ -132,9 +129,18 @@ class HangMan extends Component {
               value={this.state.value}
               onChange={this.handleChange}
             />
-
-            <input className="btn btn-dark" type="submit" value="Guess" />
+            <input className="btn btn-danger btn" type="submit" value="Guess" />
           </form>
+        <div id="winn" className="text-center">
+          {
+           isWinner ?  <img src={this.props.images[10]} width="250" alt="" /> :<img src={this.props.images[this.state.mistake]} width="250" alt="" />
+          }
+          
+        </div>
+        <div className="text-center">
+          <h4>Guess the Marvel Characters:</h4>
+          <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
+          
           <p>{gameStat}</p>
           <button className="btn btn-danger" onClick={this.resetButton}>
             PLAY AGAIN

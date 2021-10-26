@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { randomWord } from "../../entities/Word";
-import alertify from "alertifyjs";
 import "./HangMan.css";
 import frame0 from "../../images/frame1.png";
 import frame1 from "../../images/frame2.png";
@@ -12,7 +11,7 @@ import frame6 from "../../images/frame7.png";
 import frame7 from "../../images/frame8.png";
 import frame8 from "../../images/frame9.gif";
 import frame9 from "../../images/frame-10-11-12.gif";
-import Alerts from "../alert/Alert"
+
 
 class HangMan extends Component {
   static defaultProps = {

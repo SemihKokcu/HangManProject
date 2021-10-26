@@ -12,7 +12,6 @@ import frame7 from "../../images/frame8.png";
 import frame8 from "../../images/frame9.gif";
 import frame9 from "../../images/frame-10-11-12.gif";
 
-
 class HangMan extends Component {
   static defaultProps = {
     maxWrong: 9,
@@ -31,6 +30,9 @@ class HangMan extends Component {
   };
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { value: "" };
     this.state = {
       mistake: 0,
       guessed: new Set([]),
@@ -59,31 +61,43 @@ class HangMan extends Component {
     }));
   };
 
-  guessedWord() {
-    return this.state.answer
-      .split("")
-      .map((letter) =>
-        this.state.guessed.has(letter) ?
-          <button key={letter}  value={letter} className="btn btn-primary">{letter}</button>
-         :
-          <button className="btn btn-dark">{"_"}</button>
-
-      );
-  } // buton olunca okumama sorunu
- 
   resetButton = () => {
     this.setState({
       mistake: 0,
       guessed: new Set([]),
       answer: randomWord(),
+      value: "",
     });
   };
 
-  
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+  guessedWord() {
+    return this.state.answer
+      .split("")
+      .map((letter) =>
+        this.state.guessed.has(letter) ? (
+          letter
+        ) : (
+          <button className="btn btn-dark">{"_"}</button>
+        )
+      );
+  } // buton olunca okumama sorunu
+  handleSubmit(event) {
+    if (this.state.value === this.state.answer) {
+      alert("You won: " + this.state.value);
+    } else{
+      alert("You lost " + this.state.value);
+    }
+      
+   
+  }
 
   render() {
     const gameOver = this.state.mistake >= this.props.maxWrong;
     const isWinner = this.guessedWord().join("") === this.state.answer;
+
     let gameStat = this.generateButtons();
 
     if (isWinner) {
@@ -97,7 +111,7 @@ class HangMan extends Component {
     return (
       <div id="Hangman" className="container">
         <span>HANGMAN</span>
-        
+
         <div className="float-right">
           Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}
         </div>
@@ -108,20 +122,15 @@ class HangMan extends Component {
           <h4>Guess the Marvel Characters:</h4>
           <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
           <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Type your guess"
-            
-              
-            />
-            <div class="input-group-append">
-              <button 
-              
-              class="btn btn-outline-danger" type="button">
-                Guess
-              </button>
-            </div>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+              <input type="submit" value="Submit" />
+              {/* <p>{!gameOver ? this.handleSubmit() : this.state.answer}</p> */}
+            </form>
           </div>
           <p>{gameStat}</p>
           <button className="btn btn-danger" onClick={this.resetButton}>

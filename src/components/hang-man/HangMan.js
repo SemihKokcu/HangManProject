@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { randomWord } from "../../entities/Word";
+import alertify from "alertifyjs";
 import "./HangMan.css";
 import frame0 from "../../images/frame1.png";
 import frame1 from "../../images/frame2.png";
@@ -86,23 +87,28 @@ class HangMan extends Component {
   } // buton olunca okumama sorunu
   handleSubmit(event) {
     if (this.state.value === this.state.answer) {
-      alert("You won: " + this.state.value);
-    } else{
-      alert("You lost " + this.state.value);
-    }
+      alertify.warning('YOU WON!');
+      this.resetButton();
       
-   
+    } else {
+      alertify.warning("You lost");
+      this.state.mistake = this.state.mistake + 1;
+      
+    }
+    event.preventDefault();
+    
   }
 
   render() {
     const gameOver = this.state.mistake >= this.props.maxWrong;
     const isWinner = this.guessedWord().join("") === this.state.answer;
-
+  
     let gameStat = this.generateButtons();
 
     if (isWinner) {
       gameStat = "You Won!!!";
     }
+    
 
     if (gameOver) {
       gameStat = "You Lost!!!";
@@ -116,22 +122,22 @@ class HangMan extends Component {
           Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}
         </div>
         <div className="text-center">
-          <img src={this.props.images[this.state.mistake]} width="290" alt="" />
+          <img  src={this.props.images[this.state.mistake]} width="290" alt="" />
         </div>
         <div className="text-center">
           <h4>Guess the Marvel Characters:</h4>
           <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
-          <div class="input-group mb-3">
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-              <input type="submit" value="Submit" />
-              {/* <p>{!gameOver ? this.handleSubmit() : this.state.answer}</p> */}
-            </form>
-          </div>
+          <form onSubmit={this.handleSubmit}>
+            <input
+            className="form-control"
+            placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+           
+            <input className= "btn btn-dark" type="submit" value="Guess" />
+          </form>
           <p>{gameStat}</p>
           <button className="btn btn-danger" onClick={this.resetButton}>
             PLAY AGAIN

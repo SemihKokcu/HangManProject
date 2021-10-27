@@ -95,7 +95,7 @@ class HangMan extends Component {
       
     } else {
       alert("WRONG GUESS")
-      this.state.mistake = this.state.mistake + 1;
+      //this.state.mistake = this.state.mistake + 1;
     }
     event.preventDefault();
   }

@@ -121,16 +121,7 @@ class HangMan extends Component {
         <div className="float-right">
           Wrong Guesses: {this.state.mistake} of {this.props.maxWrong}
         </div>
-        <form id="form"onSubmit={this.handleSubmit}>
-            <input
-              className="form-control"
-              placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <input className="btn btn-danger btn" type="submit" value="Guess" />
-          </form>
+        
         <div id="winn" className="text-center">
           {
            isWinner ?  <img src={this.props.images[10]} width="250" alt="" /> :<img src={this.props.images[this.state.mistake]} width="250" alt="" />
@@ -140,6 +131,16 @@ class HangMan extends Component {
         <div className="text-center">
           <h4>Guess the Marvel Characters:</h4>
           <p>{!gameOver ? this.guessedWord() : this.state.answer}</p>
+          <form id="form"onSubmit={this.handleSubmit}>
+            <input
+              className="form-control"
+              placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <input className="btn btn-danger btn" type="submit" value="Guess" />
+          </form>
           
           <p>{gameStat}</p>
           <button className="btn btn-danger" onClick={this.resetButton}>

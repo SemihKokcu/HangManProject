@@ -134,7 +134,7 @@ class HangMan extends Component {
           <form id="form"onSubmit={this.handleSubmit}>
             <input
               className="form-control"
-              placeholder="Type your guess (if your guess is wrong, your next letter choice will be counted as two errors)"
+              placeholder="Type your guess"
               type="text"
               value={this.state.value}
               onChange={this.handleChange}

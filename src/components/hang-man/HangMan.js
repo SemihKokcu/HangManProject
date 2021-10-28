@@ -32,7 +32,7 @@ class HangMan extends Component {
     ],
   };
   constructor(props) {
-    super(props);
+    super(props); // bind : verilen objeye göre kopyasını yaratır
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { value: "" };
@@ -103,7 +103,7 @@ class HangMan extends Component {
   render() {
     const gameOver = this.state.mistake >= this.props.maxWrong;
     const isWinner = this.guessedWord().join("") === this.state.answer;
-
+    // join : gelen elemanları string olarak birleştirir
     let gameStat = this.generateButtons();
 
     if (isWinner) {

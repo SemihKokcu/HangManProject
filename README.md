@@ -1,3 +1,6 @@
+https://my-hangam-semih.netlify.app
+--Web version
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
